@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+var cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const getData = require('./controller/getdata');
@@ -12,7 +13,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 //  port
-PORT = process.env.PORT || 4000;
+PORT = process.env.PORT || 8000;
 
 mongoose.connect(
   process.env.MONGODB_URL,
@@ -29,6 +30,22 @@ mongoose.connect(
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({extended: true}));
+// for enabale core
+app.use(cors());
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header(
+//     'Access-Control-Allow-Header',
+//     'Origin ,X-Requested-with,Content-type ,Accept,Authorization'
+//   );
+//   if (req.method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', 'PUT,POST,PATCH, DELETE,GET');
+//     return res.status(200).json();
+//   }
+//   next();
+// });
+
 app.use('/', getData);
 app.use('/post', postData);
 app.use('/update', updateData);

@@ -4,6 +4,7 @@ const todoScama = new mongoose.Schema({
   todo: {
     type: String,
     require: true,
+    min: 4,
   },
   date: {
     type: Date,

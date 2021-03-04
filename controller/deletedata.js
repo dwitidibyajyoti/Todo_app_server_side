@@ -4,12 +4,15 @@ const Todo = require('../model/todo');
 
 router.delete('/', async (req, res) => {
   let id = {
-    _id: req.body.id,
+    _id: req.query.id,
   };
+
   try {
-    await Todo.deleteOne(id);
+    const deletedata = await Todo.deleteOne(id);
+
     res.status(200).json({
       datadeletede: true,
+      deletedata: deletedata,
     });
   } catch (error) {
     res.status(503).send(error);
